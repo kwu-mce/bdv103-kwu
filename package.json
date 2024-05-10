@@ -1,0 +1,21 @@
+{
+  "name": "bdv103-kwu",
+  "version": "1.0.0",
+  "description": "This is a template repository for the first assignment in BVD 103 at McMaster Continuing Education.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-server": "tsx ./adapter/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/cors": "^5.0.0",
+    "koa": "^2.15.3"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.15.0",
+    "typescript": "^5.4.5"
+  }
+}
