@@ -27,8 +27,7 @@ router.register({
       await next();
     },
     validate: {
-    //   body: z.object({ foo: z.number() }),
-    //   response: z.object({ hello: z.string() }),
+    //
     },
   });
 
@@ -37,8 +36,7 @@ router.register({
     method: 'get',
     path: '/books/price-range/:from/:to',
     handler: async (ctx, next) => {
-    //   const { foo } = ctx.request.body;
-    //   ctx.body = { hello: 'world' };
+    
     try {
 
         const range_from = ctx.params.from;
