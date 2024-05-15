@@ -1,5 +1,3 @@
-import data from '../mcmasteful-book-list.json';
-
 export interface Book {
     name: string,
     author: string,
@@ -8,26 +6,24 @@ export interface Book {
     image: string,
 };
 
-
 // If you have multiple filters, a book matching any of them is a match.
 async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promise<Book[]>{
     
     try {
-        // console.log(filters);
-        
-        var books: Book[] = data;
+        const response = await fetch('http://localhost:9000/books');
 
-        if (filters) {
-            filters.forEach(filterObj => {
-                if (filterObj.from !== undefined && filterObj.to !== undefined) {
+        var books: Book[] = await response.json() as Book[];
 
-                    const filtered_books = books.filter((book) => book.price > filterObj.from! && book.price < filterObj.to!);
-                    books = filtered_books;
+        // if (filters) {
+        //     filters.forEach(filterObj => {
+        //         if (filterObj.from !== undefined && filterObj.to !== undefined) {
 
-                }
-            });
-        }
-        console.log(books);
+        //             const filtered_books = books.filter((book) => book.price > filterObj.from! && book.price < filterObj.to!);
+        //             books = filtered_books;
+
+        //         }
+        //     });
+        // }
 
         return books;
     
@@ -40,7 +36,6 @@ async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promis
 const assignment = "assignment-1";
 
 export default {
-    assignment,
-    listBooks
+    assignment
 };
 
