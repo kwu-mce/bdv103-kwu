@@ -1,63 +1,49 @@
 import Router from 'koa-zod-router';
 import { z } from 'zod';
-import {listBooks} from '../controllers/bookController';
-
-import data from '../../mcmasteful-book-list.json';
-import { Book } from '../models/bookModel';
+import { BookController } from '../controllers/bookController';
 
 const router = Router();
+const bookController = new BookController();
 
 router.register({
-  name: 'books',
+  name: 'getBooks',
   method: 'get',
   path: '/books',
   handler: async (ctx, next) => {
-
-  try {
-      var books: Book[] = data;
-      // console.log(books);
+    try {
+      const books = await bookController.getBooks();
       ctx.body = books;
-
-  } catch {
+    } catch (error : any) {
       ctx.status = 500;
-      ctx.body = 'Error fetching books';
-  }
+      ctx.body = error.message;
+    }
     await next();
   },
   validate: {
-  //
   },
 });
 
 router.register({
-  name: 'bookswithpricerange',
+  name: 'getBooksByPriceRange',
   method: 'get',
   path: '/books/price-range/:from/:to',
   handler: async (ctx, next) => {
-
-  try {
+    try {
       const range_from = ctx.params.from;
       const range_to = ctx.params.to;  
-      var books: Book[] = data;
-
-      if (range_from !== undefined && range_to !== undefined) {
-
-          const filtered_books = books.filter((book) => book.price > range_from && book.price < range_to);
-          books = filtered_books;
-
-      }
-      // console.log(books);
+      const books = await bookController.getBooksByPriceRange(range_from, range_to);
       ctx.body = books;
-
-  } catch {
+    } catch (error : any) {
       ctx.status = 500;
-      ctx.body = 'Error fetching books';
-  }
+      ctx.body = error.message;
+    }
     await next();
   },
   validate: {
-      params: z.object({ from: z.coerce.number(), to: z.coerce.number() })
+    params: z.object({ from: z.coerce.number(), to: z.coerce.number() })
   },
 });
+
+
 
 export default router;
