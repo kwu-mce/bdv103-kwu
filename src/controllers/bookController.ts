@@ -38,6 +38,41 @@ export class BookController {
         }
     }
 
-    
+    // create new book
+    async createBook(newBook: Book): Promise<Book> {
+        try {
+            data.push(newBook);
+            return await newBook;
+        } catch (error: any) {
+            throw new Error('Error creating book');
+        }
+    }
 
-  }
+    // update a book referenced by name
+    async updateBook(updatedBook: Book): Promise<Book> {
+        try {
+            const index = data.findIndex(book => book.name === updatedBook.name);
+            if (index === -1) {
+                throw new Error('Book not found');
+            }
+            data[index] = updatedBook;
+            return await updatedBook;
+        } catch (error: any) {
+            throw new Error('Error updating book');
+        }
+    }
+
+    // delete a book referenced by name
+    async deleteBook(name: string): Promise<void> {
+        try {
+            const index = data.findIndex(book => book.name === name);
+            if (index === -1) {
+                throw new Error('Book not found');
+            }
+            data.splice(index, 1);
+        } catch (error: any) {
+            throw new Error('Error deleting book');
+        }
+    }
+
+}
