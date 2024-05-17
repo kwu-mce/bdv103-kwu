@@ -8,3 +8,8 @@ services:
     command: sleep infinity
   mongo:
     image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      - './data:/data/db'
