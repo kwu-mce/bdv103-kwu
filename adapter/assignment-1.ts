@@ -10,20 +10,33 @@ export interface Book {
 async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promise<Book[]>{
     
     try {
-        const response = await fetch('http://localhost:9000/books');
 
+        const response = await fetch('http://localhost:9000/books');
         var books: Book[] = await response.json() as Book[];
 
-        // if (filters) {
-        //     filters.forEach(filterObj => {
-        //         if (filterObj.from !== undefined && filterObj.to !== undefined) {
+        
+        if (filters) {
+            filters.forEach(filterObj => {
 
-        //             const filtered_books = books.filter((book) => book.price > filterObj.from! && book.price < filterObj.to!);
-        //             books = filtered_books;
+                if (filterObj.from !== undefined && filterObj.to == undefined) {
 
-        //         }
-        //     });
-        // }
+                    var filtered_books = books.filter((book) => book.price > filterObj.from!);
+                    books = filtered_books;
+                }
+
+                if (filterObj.from == undefined && filterObj.to !== undefined) {
+
+                    var filtered_books = books.filter((book) => book.price < filterObj.to!);
+                    books = filtered_books;
+                }
+
+                if (filterObj.from !== undefined && filterObj.to !== undefined) {
+
+                    var filtered_books = books.filter((book) => book.price > filterObj.from! && book.price < filterObj.to!);
+                    books = filtered_books;
+                }
+            });
+        } 
 
         return books;
     
@@ -36,6 +49,7 @@ async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promis
 const assignment = "assignment-1";
 
 export default {
-    assignment
+    assignment,
+    listBooks
 };
 
