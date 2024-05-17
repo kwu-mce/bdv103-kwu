@@ -16,11 +16,45 @@ async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promis
 }
 
 async function createOrUpdateBook(book: Book): Promise<BookID> {
-    throw new Error("Todo")
+
+    try {
+        const settings = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(book)
+        } 
+    
+        const response = await fetch('http://localhost:9000/books', settings);
+        const newBook : Book = await response.json() as Book;
+    
+        return newBook.id!;
+    } catch (err : any) {
+        throw new Error
+    }
+    
 }
 
 async function removeBook(book: BookID): Promise<void> {
-    throw new Error("Todo")
+
+    try {
+        // console.log (`book= ${book}`);
+
+        const settings = {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        } 
+        
+        const response = await fetch(`http://localhost:9000/books/${book}`, settings);
+    
+    } catch (err : any) {
+        throw new Error(err)
+    }
 }
 
 const assignment = "assignment-2";
