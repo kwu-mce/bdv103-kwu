@@ -7,6 +7,7 @@ const bookController = new BookController();
 
 // schema for book object
 const bookSchema = z.object( {
+  id: z.string().optional(),
   name: z.string(),
   author: z.string(),
   description: z.string(),
@@ -82,11 +83,11 @@ router.register({
 router.register({
   name: 'updateBook',
   method: 'put',
-  path: '/books/:name',
+  path: '/books/:id',
   handler: async (ctx, next) => {
     try {
       const updatedBook = ctx.request.body;
-      updatedBook.name = ctx.params.name;
+      updatedBook.id = ctx.params.id;
       const book = await bookController.updateBook(updatedBook);
       
       ctx.body = book;
@@ -98,7 +99,7 @@ router.register({
     await next();
   },
   validate: {
-    params: z.object({ name: z.coerce.string() }),
+    params: z.object({ id: z.coerce.string() }),
     body: bookSchema
   },
 });
@@ -106,11 +107,11 @@ router.register({
 router.register({
   name: 'deleteBook',
   method: 'delete',
-  path: '/books/:name',
+  path: '/books/:id',
   handler: async (ctx, next) => {
     try {
-      const name = ctx.params.name;
-      await bookController.deleteBook(name);
+      const id = ctx.params.id;
+      await bookController.deleteBook(id);
       
       ctx.status = 200;
       ctx.body = 'Book deleted successfully';
@@ -122,7 +123,7 @@ router.register({
     await next();
   },
   validate: {
-    params: z.object({ name: z.coerce.string() })
+    params: z.object({ id: z.coerce.string() })
   },
 });
 

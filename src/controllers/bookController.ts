@@ -1,7 +1,6 @@
 import data from '../../mcmasteful-book-list.json';
 import { Book } from '../models/bookModel';
 
-
 export class BookController {
     
     // get books
@@ -51,7 +50,7 @@ export class BookController {
     // update a book referenced by name
     async updateBook(updatedBook: Book): Promise<Book> {
         try {
-            const index = data.findIndex(book => book.name === updatedBook.name);
+            const index = data.findIndex(book => book.id === updatedBook.id);
             if (index === -1) {
                 throw new Error('Book not found');
             }
@@ -63,9 +62,9 @@ export class BookController {
     }
 
     // delete a book referenced by name
-    async deleteBook(name: string): Promise<void> {
+    async deleteBook(id: string): Promise<void> {
         try {
-            const index = data.findIndex(book => book.name === name);
+            const index = data.findIndex(book => book.id === id);
             if (index === -1) {
                 throw new Error('Book not found');
             }
