@@ -1,13 +1,19 @@
+import mongoose, { mongo } from 'mongoose';
 import data from '../../mcmasteful-book-list.json';
 import { Book } from '../models/bookModel';
+import { MongoDatabase, IBook } from '../controllers/db';
 
 export class BookController {
-    
+
     // get books
     async getBooks(): Promise<Book[]> {
 
         try {
-            var books: Book[] = data;
+            const db = MongoDatabase.getInstance();
+            db.connect();
+            var books = db.getBooks();
+
+            // var books: Book[] = data;
             // console.log(books);
             return await books;
         } catch (error : any) {
@@ -38,23 +44,33 @@ export class BookController {
     }
 
     // create new book
-    async createBook(newBook: Book): Promise<Book> {
+    async createBook(newBook: IBook): Promise<Book> {
         try {
-            data.push(newBook);
+            const db = MongoDatabase.getInstance();
+            db.connect();
+            db.createBook(newBook);
+
+            // data.push(newBook);
             return await newBook;
+
         } catch (error: any) {
             throw new Error('Error creating book');
         }
     }
 
     // update a book referenced by name
-    async updateBook(updatedBook: Book): Promise<Book> {
+    async updateBook(updatedBook: IBook): Promise<Book> {
         try {
-            const index = data.findIndex(book => book.id === updatedBook.id);
-            if (index === -1) {
-                throw new Error('Book not found');
-            }
-            data[index] = updatedBook;
+            // const index = data.findIndex(book => book.id === updatedBook.id);
+            // if (index === -1) {
+            //     throw new Error('Book not found');
+            // }
+            // data[index] = updatedBook;
+
+            const db = MongoDatabase.getInstance();
+            db.connect();
+            db.updateBook(updatedBook.id, updatedBook);
+
             return await updatedBook;
         } catch (error: any) {
             throw new Error('Error updating book');
@@ -64,11 +80,16 @@ export class BookController {
     // delete a book referenced by name
     async deleteBook(id: string): Promise<void> {
         try {
-            const index = data.findIndex(book => book.id === id);
-            if (index === -1) {
-                throw new Error('Book not found');
-            }
-            data.splice(index, 1);
+            // const index = data.findIndex(book => book.id === id);
+            // if (index === -1) {
+            //     throw new Error('Book not found');
+            // }
+            // data.splice(index, 1);
+
+            const db = MongoDatabase.getInstance();
+            db.connect();
+            db.deleteBook(id);
+
         } catch (error: any) {
             throw new Error('Error deleting book');
         }

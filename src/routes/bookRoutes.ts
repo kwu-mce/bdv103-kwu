@@ -1,6 +1,7 @@
 import Router from 'koa-zod-router';
 import { z } from 'zod';
 import { BookController } from '../controllers/bookController';
+import { IBook } from '../controllers/db';
 
 const router = Router();
 const bookController = new BookController();
@@ -20,9 +21,9 @@ router.register({
   method: 'get',
   path: '/books',
   handler: async (ctx, next) => {
-    try {
+    try { 
       const books = await bookController.getBooks();
-      
+
       ctx.body = books;
 
     } catch (error : any) {
@@ -64,7 +65,7 @@ router.register({
   path: '/books',
   handler: async (ctx, next) => {
     try {
-      const newBook = ctx.request.body;
+      const newBook = ctx.request.body as IBook;
       const book = await bookController.createBook(newBook);
       
       ctx.body = book;
@@ -86,7 +87,7 @@ router.register({
   path: '/books/:id',
   handler: async (ctx, next) => {
     try {
-      const updatedBook = ctx.request.body;
+      const updatedBook = ctx.request.body as IBook;
       updatedBook.id = ctx.params.id;
       const book = await bookController.updateBook(updatedBook);
       
