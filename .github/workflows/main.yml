@@ -8,8 +8,8 @@ jobs:
   first-job:
     runs-on: windows-latest
     steps:
-      - run: npm run fix-lint
+      - run: npx eslint --fix .
   second-job:
     runs-on: windows-latest
     steps:
-      - run: npm run start-server
+      - run: tsc ./src/index.ts --noEmit
