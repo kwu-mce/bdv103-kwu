@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-server": "tsc ./src/index.ts --noEmit",
+    "tsx-start-server": "tsx ./src/index.ts",
+    "start-server": "tsc ./src/index.ts --noEmit", 
     "lint": "npx eslint .",
     "fix-lint": "npx eslint --fix ."
 
