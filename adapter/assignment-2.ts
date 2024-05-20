@@ -31,8 +31,8 @@ async function createOrUpdateBook(book: Book): Promise<BookID> {
         const newBook : Book = await response.json() as Book;
     
         return newBook.id!;
-    } catch (err : any) {
-        throw new Error
+    } catch {
+        throw new Error; 
     }
     
 }
@@ -52,8 +52,8 @@ async function removeBook(book: BookID): Promise<void> {
         
         const response = await fetch(`http://localhost:9000/books/${book}`, settings);
     
-    } catch (err : any) {
-        throw new Error(err)
+    } catch {
+        throw new Error;
     }
 }
 

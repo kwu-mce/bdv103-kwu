@@ -1,4 +1,3 @@
-import mongoose, { mongo } from 'mongoose';
 import data from '../../mcmasteful-book-list.json';
 import { Book } from '../models/bookModel';
 import { MongoDatabase, IBook } from '../controllers/db';
@@ -11,12 +10,12 @@ export class BookController {
         try {
             const db = MongoDatabase.getInstance();
             db.connect();
-            var books = db.getBooks();
+            const books = db.getBooks();
 
             // var books: Book[] = data;
             // console.log(books);
             return await books;
-        } catch (error : any) {
+        } catch {
             throw new Error('Error fetching books');
         }
     }
@@ -27,7 +26,7 @@ export class BookController {
           
             const range_from = from;
             const range_to = to;  
-            var books: Book[] = data;
+            let books: Book[] = data;
     
             if (range_from !== undefined && range_to !== undefined) {
     
@@ -38,7 +37,7 @@ export class BookController {
             // console.log(books);
             return await books;
 
-        } catch (error : any) {
+        } catch {
           throw new Error('Error fetching books');
         }
     }
@@ -53,7 +52,7 @@ export class BookController {
             // data.push(newBook);
             return await newBook;
 
-        } catch (error: any) {
+        } catch {
             throw new Error('Error creating book');
         }
     }
@@ -72,7 +71,7 @@ export class BookController {
             db.updateBook(updatedBook.id, updatedBook);
 
             return await updatedBook;
-        } catch (error: any) {
+        } catch {
             throw new Error('Error updating book');
         }
     }
@@ -90,7 +89,7 @@ export class BookController {
             db.connect();
             db.deleteBook(id);
 
-        } catch (error: any) {
+        } catch {
             throw new Error('Error deleting book');
         }
     }

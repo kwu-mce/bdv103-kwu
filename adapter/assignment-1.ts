@@ -12,7 +12,7 @@ async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promis
     try {
 
         const response = await fetch('http://localhost:9000/books');
-        var books: Book[] = await response.json() as Book[];
+        let books: Book[] = await response.json() as Book[];
 
         
         if (filters) {
@@ -20,19 +20,19 @@ async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promis
 
                 if (filterObj.from !== undefined && filterObj.to == undefined) {
 
-                    var filtered_books = books.filter((book) => book.price > filterObj.from!);
+                    const filtered_books = books.filter((book) => book.price > filterObj.from!);
                     books = filtered_books;
                 }
 
                 if (filterObj.from == undefined && filterObj.to !== undefined) {
 
-                    var filtered_books = books.filter((book) => book.price < filterObj.to!);
+                    const filtered_books = books.filter((book) => book.price < filterObj.to!);
                     books = filtered_books;
                 }
 
                 if (filterObj.from !== undefined && filterObj.to !== undefined) {
 
-                    var filtered_books = books.filter((book) => book.price > filterObj.from! && book.price < filterObj.to!);
+                    const filtered_books = books.filter((book) => book.price > filterObj.from! && book.price < filterObj.to!);
                     books = filtered_books;
                 }
             });
