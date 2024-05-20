@@ -4,3 +4,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - run: npm run fix-lint
+  second-job:
+    steps:
+      - run: npm run start-server
