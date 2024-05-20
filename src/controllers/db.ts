@@ -37,7 +37,7 @@ export class MongoDatabase {
     public async connect(): Promise<void> {
         try {
             await mongoose.connect('mongodb://mongo:27017', {  });
-            console.log ('Connected to MongoDB');
+            // console.log ('Connected to MongoDB');
         } catch (err) {
             console.log ('Error connecting to db', err);
         }
