@@ -1,5 +1,6 @@
 import data from '../../mcmasteful-book-list.json';
 import { Book } from '../models/bookModel';
+import { Filter } from '../models/filterModel';
 import { MongoDatabase, IBook } from '../controllers/db';
 
 export class BookController {
@@ -19,7 +20,22 @@ export class BookController {
             throw new Error('Error fetching books');
         }
     }
-  
+
+    // get books with filters
+    async getBooksWithFilters(filters?: Filter): Promise<Book[]> {
+    
+        try {
+            const db = MongoDatabase.getInstance();
+            db.connect();
+
+            const books = db.getBooks();
+    
+            return await books;
+        } catch {
+            throw new Error('Error fetching books');
+        }
+    }
+     
     // get books by price range
     async getBooksByPriceRange(from: number, to: number): Promise<Book[]> {
         try {
