@@ -29,6 +29,8 @@ export class BookController {
             db.connect();
 
             const books = db.getBooks();
+
+            // const filtered_books = await books.filter((book) => book.price > filters?.from! && book.price < filters?.to!);
     
             return await books;
         } catch {
