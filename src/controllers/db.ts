@@ -25,7 +25,7 @@ const BookModel = mongoose.model<IBook>('Book', BookSchema);
 export class MongoDatabase {
     private static instance: MongoDatabase;
 
-    private constructor() {};
+    private constructor() {}
 
     public static getInstance(): MongoDatabase {
         if (!MongoDatabase.instance) {

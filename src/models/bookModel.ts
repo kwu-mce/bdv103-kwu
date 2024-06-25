@@ -7,4 +7,4 @@ export interface Book {
     description: string,
     price: number,
     image: string,
-};
+}
