@@ -5,11 +5,15 @@ jobs:
     steps:
       - run: node --version
       - run: npm --version
-  first-job:
+  eslint-job:
     runs-on: windows-latest
     steps:
       - run: npx eslint --fix .
-  second-job:
+  noEmit-job:
     runs-on: windows-latest
     steps:
       - run: tsc ./src/index.ts --noEmit
+  vitest-job:
+    runs-on: windows-latest
+    steps:
+      - run: npx vitest
