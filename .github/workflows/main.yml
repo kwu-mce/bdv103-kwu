@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Run NPM install
         run: npm install
-      - run: npx eslint --fix .
+      - run: npx eslint .
   indexNoEmit-job:
     runs-on: windows-latest
     steps:
