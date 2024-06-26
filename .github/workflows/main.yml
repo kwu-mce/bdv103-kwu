@@ -5,15 +5,27 @@ jobs:
     steps:
       - run: node --version
       - run: npm --version
-  eslint-job:
+  linting-job:
     runs-on: windows-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run NPM install
+        run: npm install
       - run: npx eslint --fix .
-  noEmit-job:
+  indexNoEmit-job:
     runs-on: windows-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run NPM install
+        run: npm install
       - run: tsc ./src/index.ts --noEmit
   vitest-job:
     runs-on: windows-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run NPM install
+        run: npm install
       - run: npx vitest
