@@ -22,7 +22,31 @@ export interface Filter {
 // If multiple filters are provided, any book that matches at least one of them should be returned
 // Within a single filter, a book would need to match all the given conditions
 async function listBooks (filters?: Filter[]): Promise<Book[]> {
-  throw new Error("Todo")
+  
+  try {
+  
+    const response = await fetch(`http://localhost:9000/books`);
+    const books: Book[] = await response.json() as Book[];
+
+    if (!filters || filters.length === 0) {
+      return books;
+    }
+
+    return books.filter(book => {
+      return filters.some(filter => {
+        const filterFromPrice = filter.from ? book.price >= filter.from : true;
+        const filterToPrice = filter.to ? book.price <= filter.to : true;
+        const filterName = filter.name ? book.name.includes(filter.name) : true;
+        const filterAuthor = filter.author ? book.author.includes(filter.author) : true;
+
+        return filterFromPrice && filterToPrice && filterName && filterAuthor;
+      })
+    })
+
+  } catch {
+      throw new Error("Error finding book list")
+  }
+
 }
 
 async function createOrUpdateBook (book: Book): Promise<BookID> {
