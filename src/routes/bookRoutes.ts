@@ -37,51 +37,6 @@ router.register({
 });
 
 router.register({
-  name: 'getBooksWithFilters',
-  method: 'get',
-  path: '/filteredbooks',
-  handler: async (ctx, next) => {
-    try { 
-      const filters = ctx.query;
-
-      const books = await bookController.getBooksWithFilters(filters);
-
-      ctx.body = books;
-
-    } catch (error : any) {
-      ctx.status = 500;
-      ctx.body = error.message;
-    }
-    await next();
-  },
-  validate: {
-  },
-});
-
-router.register({
-  name: 'getBooksByPriceRange',
-  method: 'get',
-  path: '/books/price-range/:from/:to',
-  handler: async (ctx, next) => {
-    try {
-      const range_from = ctx.params.from;
-      const range_to = ctx.params.to;  
-      const books = await bookController.getBooksByPriceRange(range_from, range_to);
-      
-      ctx.body = books;
-
-    } catch (error : any) {
-      ctx.status = 500;
-      ctx.body = error.message;
-    }
-    await next();
-  },
-  validate: {
-    params: z.object({ from: z.coerce.number(), to: z.coerce.number() })
-  },
-});
-
-router.register({
   name: 'createBook',
   method: 'post',
   path: '/books',
