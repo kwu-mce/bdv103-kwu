@@ -7,5 +7,6 @@ export default defineConfig({
         globals: true,
         include: ['test/**/*.test.ts'],
         includeSource: ['src/**/*.{js,ts}'],
+        setupFiles: ['./test/setupMongoTest.ts']
     },
 });
