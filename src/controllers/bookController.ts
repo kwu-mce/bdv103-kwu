@@ -19,6 +19,20 @@ export class BookController {
         }
     }
 
+    // get books by id
+    async getBookById(id: string): Promise<Book | null> {
+
+        try {
+            const db = MongoDatabase.getInstance();
+            db.connect();
+            const book = db.getBookById(id);
+
+            return await book;
+        } catch {
+            throw new Error('Error fetching books');
+        }
+    }
+
     // create new book
     async createBook(newBook: IBook): Promise<Book> {
         try {

@@ -37,6 +37,28 @@ router.register({
 });
 
 router.register({
+  name: 'getBookById',
+  method: 'get',
+  path: '/books/:id',
+  handler: async (ctx, next) => {
+    try { 
+      
+      let id = ctx.params.id;
+      const book = await bookController.getBookById(id);
+      
+      ctx.body = book;
+
+    } catch (error : any) {
+      ctx.status = 500;
+      ctx.body = error.message;
+    }
+    await next();
+  },
+  validate: {
+  },
+});
+
+router.register({
   name: 'createBook',
   method: 'post',
   path: '/books',
