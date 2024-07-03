@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "testd": "echo \"Error: no test specified\" && exit 1",
-    "start-server": "tsx ./src/index.ts",
+    "start-server": "tsx ./src/index.ts | sh clientsdk.sh",
     "tsc-start-server": "tsc ./src/index.ts --noEmit",
     "lint": "npx eslint .",
     "fix-lint": "npx eslint --fix .",
@@ -29,6 +29,7 @@
     "@types/express": "^4.17.21",
     "@types/koa": "^2.15.0",
     "@types/node": "^20.14.9",
+    "@vitejs/plugin-legacy": "^5.4.1",
     "eslint": "8",
     "globals": "^15.3.0",
     "mongodb-memory-server": "^9.4.0",

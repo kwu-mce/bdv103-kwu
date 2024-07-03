@@ -9,5 +9,11 @@
     "routes": {
       "routesDir": "build",
       "middleware": "koa"
+    },
+    "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@controllers/*": ["src/controllers/*"]
     }
   }
+}

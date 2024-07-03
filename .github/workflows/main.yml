@@ -29,3 +29,11 @@ jobs:
       - name: Run NPM install
         run: npm install
       - run: npx vitest
+  routes-sdk-job:
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run NPM install
+        run: npm install
+      - run: sh clientsdk.sh
