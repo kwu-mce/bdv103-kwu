@@ -1,6 +1,4 @@
-import data from '../../mcmasteful-book-list.json';
 import { Book } from '../models/bookModel';
-// import { Filter } from '../models/filterModel';
 import { MongoDatabase, IBook } from '../controllers/db';
 
 export class BookController {

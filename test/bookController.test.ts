@@ -13,7 +13,7 @@ describe ('sum', () => {
         expect(sum(1, 4)).toBe(5);
     })
 
-})
+});
 
 beforeAll(async () => {
     startMongoServer;
@@ -25,7 +25,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
     stopMongoServer;
-})
+});
 
 it('insert and find book in db', async () => {
     const collection = db.collection('books');
@@ -37,4 +37,4 @@ it('insert and find book in db', async () => {
     await collection.insertOne(testBook);
     const insertData = await collection.findOne({name: 'test'});
     expect(insertData).toEqual(testBook);
-})
+});
