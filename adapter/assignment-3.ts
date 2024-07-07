@@ -9,58 +9,43 @@ export interface Book {
   description: string
   price: number
   image: string
-}
+};
 
 export interface Filter {
   from?: number
   to?: number
   name?: string
   author?: string
-}
+};
 
 // If multiple filters are provided, any book that matches at least one of them should be returned
 // Within a single filter, a book would need to match all the given conditions
 async function listBooks (filters?: Filter[]): Promise<Book[]> {
-  try {
-    
-    let queryParams = '';
-
-    if (filters) {
-      // for (const filter of filters) {
-       
-      //     let filter_from = filter.from;
-      //     let filter_to = filter.to;
-      //     let filter_name = filter.name;
-      //     let filter_author = filter.author;
-
-      //     console.log(`filterfrom= ${filter_from}`);
-      //     console.log(`filterto= ${filter_to}`);
-      //     console.log(`filtername= ${filter_name}`);
-      //     console.log(`filterauthor= ${filter_author}`);
-      //   }
-      
-      filters.forEach((filter, index) => {
-
-        for (const key in filter) {
-          queryParams += `${key}=${filter[key as keyof Filter]}&`;
-        }
-        
-      });
+  const query = filters?.map(({ from, to, name, author }, index) => {
+    let result = ''
+    if (typeof from === 'number') {
+      result += `&filters[${index}][from]=${from}`
     }
-
-    if (queryParams.endsWith('&')) {
-      queryParams = queryParams.slice(0, -1);
+    if (typeof to === 'number') {
+      result += `&filters[${index}][to]=${to}`
     }
+    if (typeof name === 'string' && name.trim().length > 0) {
+      result += `&filters[${index}][name]=${name.trim()}`
+    }
+    if (typeof author === 'string' && author.trim().length > 0) {
+      result += `&filters[${index}][author]=${author.trim()}`
+    }
+    return result
+  }).join('&') ?? ''
 
-    console.log(`queryParams= ${queryParams}`);
+  // We then make the request
+  const result = await fetch(`http://localhost:3000/books?${query}`)
 
-    const response = await fetch(`http://localhost:9000/filteredbooks?${queryParams}`);
-    const books: Book[] = await response.json() as Book[];
-
-    return books;
-
-  } catch {
-      throw new Error("Error finding book list")
+  if (result.ok) {
+    // And if it is valid, we parse the JSON result and return it.
+    return await result.json() as Book[]
+  } else {
+    throw new Error('Failed to fetch books')
   }
 }
 

@@ -1,55 +1,38 @@
 export interface Book {
-    name: string,
-    author: string,
-    description: string,
-    price: number,
-    image: string,
-}
-
-// If you have multiple filters, a book matching any of them is a match.
-async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promise<Book[]>{
-    
-    try {
-
-        const response = await fetch('http://localhost:9000/books');
-        let books: Book[] = await response.json() as Book[];
-
-        
-        if (filters) {
-            filters.forEach(filterObj => {
-
-                if (filterObj.from !== undefined && filterObj.to == undefined) {
-
-                    const filtered_books = books.filter((book) => book.price > filterObj.from!);
-                    books = filtered_books;
-                }
-
-                if (filterObj.from == undefined && filterObj.to !== undefined) {
-
-                    const filtered_books = books.filter((book) => book.price < filterObj.to!);
-                    books = filtered_books;
-                }
-
-                if (filterObj.from !== undefined && filterObj.to !== undefined) {
-
-                    const filtered_books = books.filter((book) => book.price > filterObj.from! && book.price < filterObj.to!);
-                    books = filtered_books;
-                }
-            });
-        } 
-
-        return books;
-    
-    } catch {
-        throw new Error("Error finding book list")
-    }
-    
-}
-
-const assignment = "assignment-1";
-
-export default {
-    assignment,
-    listBooks
+  name: string
+  author: string
+  description: string
+  price: number
+  image: string
 };
 
+async function listBooks (filters?: Array<{ from?: number, to?: number }>): Promise<Book[]> {
+  // We want to generate the query string to match the format expected by qs: https://www.npmjs.com/package/qs
+  const query = filters?.map(({ from, to }, index) => {
+    let result = ''
+    if (typeof from === 'number') {
+      result += `&filters[${index}][from]=${from}`
+    }
+    if (typeof to === 'number') {
+      result += `&filters[${index}][to]=${to}`
+    }
+    return result
+  }).join('&') ?? ''
+
+  // We then make the request
+  const result = await fetch(`http://localhost:3000/books?${query}`)
+
+  if (result.ok) {
+    // And if it is valid, we parse the JSON result and return it.
+    return await result.json() as Book[]
+  } else {
+    throw new Error('Failed to fetch books')
+  }
+}
+
+const assignment = 'assignment-1'
+
+export default {
+  assignment,
+  listBooks
+}

@@ -1,67 +1,50 @@
-import assignment1 from "./assignment-1";
+import previous_assignment from './assignment-1'
 
-export type BookID = string;
+export type BookID = string
 
 export interface Book {
-    id?: BookID,
-    name: string,
-    author: string,
-    description: string,
-    price: number,
-    image: string,
+  id?: BookID
+  name: string
+  author: string
+  description: string
+  price: number
+  image: string
+};
+
+async function listBooks (filters?: Array<{ from?: number, to?: number }>): Promise<Book[]> {
+  return await previous_assignment.listBooks(filters)
 }
 
-async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promise<Book[]>{
-    return assignment1.listBooks(filters);
-}
-
-async function createOrUpdateBook(book: Book): Promise<BookID> {
-
-    try {
-        const settings = {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(book)
-        } 
-    
-        const response = await fetch('http://localhost:9000/books', settings);
-        const newBook : Book = await response.json() as Book;
-    
-        return newBook.id!;
-    } catch {
-        throw new Error; 
+async function createOrUpdateBook (book: Book): Promise<BookID> {
+  const result = await fetch('http://localhost:3000/books', {
+    method: 'POST',
+    body: JSON.stringify(book),
+    headers: {
+      'Content-Type': 'application/json'
     }
-    
+  })
+
+  if (result.ok) {
+    const res = await result.json() as { id: BookID }
+    return res.id
+  } else {
+    throw new Error('Failed to create or update book')
+  }
 }
 
-async function removeBook(book: BookID): Promise<void> {
+async function removeBook (book: BookID): Promise<void> {
+  const result = await fetch(`http://localhost:3000/books/${book}`, { method: 'DELETE' })
 
-    try {
-        // console.log (`book= ${book}`);
-
-        const settings = {
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        } 
-        
-        const response = await fetch(`http://localhost:9000/books/${book}`, settings);
-    
-    } catch {
-        throw new Error;
-    }
+  if (!result.ok) {
+    throw new Error('Failed to create or update book')
+  }
 }
 
-const assignment = "assignment-2";
+const assignment = 'assignment-2'
 
 export default {
-    assignment,
-    createOrUpdateBook,
-    removeBook,
-    listBooks
-};
+  assignment,
+  createOrUpdateBook,
+  removeBook,
+  listBooks
+}
