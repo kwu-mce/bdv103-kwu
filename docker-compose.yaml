@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: nginx:1-alpine
+    image: nginx
     ports:
       - 8080:80
     volumes:
@@ -12,6 +12,18 @@ services:
   mongo:
     image: mongo:latest
   server:
+    image: node:20
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: npx -y tsx ./index.ts
+  server-2:
+    image: node:20
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: npx -y tsx ./index.ts
+  server-3:
     image: node:20
     volumes:
       - ./:/app
