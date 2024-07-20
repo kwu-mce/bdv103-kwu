@@ -11,7 +11,7 @@ services:
     volumes:
       - ./adapter:/source/adapter
   
-  mongo:
+  mongo-2:
     image: mongo:latest
   
   server:
@@ -35,9 +35,9 @@ services:
     working_dir: /app
     command: npx -y tsx ./index.ts
 
-  rabbitmq:
+  rabbitmq-2:
     image: rabbitmq:3-management
-    container_name: rabbitmq
+    container_name: rabbitmq2
     ports:
         - 5672:5672
         - 15672:15672
