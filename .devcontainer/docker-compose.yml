@@ -9,3 +9,6 @@ services:
 
   mongo:
     image: mongo:latest
+
+  mongo-2:
+    image: mongo:latest
