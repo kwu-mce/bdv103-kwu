@@ -1,4 +1,4 @@
-import { type ShelfId, type BookID, type OrderId } from '../../adapter/assignment-4'
+import { type ShelfId, type BookID, type OrderId } from '../../../adapter/assignment-4'
 import { InMemoryWarehouse, type WarehouseData } from './warehouse_data'
 
 export async function fulfilOrder (data: WarehouseData, orderId: OrderId, booksFulfilled: Array<{ book: BookID, shelf: ShelfId, numberOfBooks: number }>): Promise<void> {
